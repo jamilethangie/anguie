@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Área Técnica Informática</title>
+    <style>
+        /* Estilos CSS básicos */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            /* Fondo de colores claros - gradiente lineal */
+            background: linear-gradient(to right, #e0f7fa, #bbdefb, #c5cae9);
+            min-height: 100vh; /* Asegura que el gradiente ocupe toda la altura */
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: #fce4ec; /* Un rosa muy claro */
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #f8bbd0;
+        }
+        .logo {
+            width: 60px; /* Ajusta el tamaño de tu logo */
+            height: auto;
+            vertical-align: middle;
+            margin-right: 15px;
+            border-radius: 50%; /* Si quieres que el logo sea redondo */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #8a2be2; /* Violeta */
+            font-size: 30px;
+            margin-bottom: 5px;
+            display: inline-block; /* Para aplicar la animación de parpadeo */
+            animation: blink 1.5s infinite alternate; /* Animación de parpadeo */
+        }
+
+        /* Animación de parpadeo para el título */
+        @keyframes blink {
+            from { opacity: 1; }
+            to { opacity: 0.3; }
+        }
+
+        .subtitle {
+            color: #4a148c; /* Morado oscuro */
+            font-size: 18px;
+            font-weight: bold;
+        }
+        nav {
+            background-color: #ffe0b2; /* Naranja muy claro */
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+        }
+        nav ul li {
+            position: relative;
+            margin: 0 12px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            padding: 10px 18px;
+            display: block;
+            white-space: nowrap;
+            border-radius: 20px; /* Bordes más redondeados para los botones */
+            transition: all 0.3s ease; /* Suave transición al hover */
+        }
+        nav ul li a:hover {
+            transform: translateY(-2px); /* Pequeño efecto de levantamiento */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Colores específicos para cada asignatura */
+        .design-web a { background-color: #ffccbc; color: #d84315; } /* Rojo claro */
+        .design-web a:hover { background-color: #ffab91; }
+
+        .os-networks a { background-color: #d1c4e9; color: #4527a0; } /* Morado claro */
+        .os-networks a:hover { background-color: #b39ddb; }
+
+        .tech-support a { background-color: #c8e6c9; color: #2e7d32; } /* Verde claro */
+        .tech-support a:hover { background-color: #a5d6a7; }
+
+        .programming-db a { background-color: #bbdefb; color: #1565c0; } /* Azul claro */
+        .programming-db a:hover { background-color: #90caf9; }
+
+        .office-apps a { background-color: #fff9c4; color: #fbc02d; } /* Amarillo claro */
+        .office-apps a:hover { background-color: #fff59d; }
+
+
+        /* Estilos para el menú desplegable (dropdown) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fefefe; /* Fondo blanco para el dropdown */
+            min-width: 180px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 10; /* Asegura que esté por encima de otros elementos */
+            text-align: left;
+            left: 50%; /* Centra el dropdown */
+            transform: translateX(-50%); /* Ajuste para centrar */
+            border-radius: 8px;
+            overflow: hidden; /* Para que los bordes redondeados funcionen bien */
+        }
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 18px;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #eee; /* Separador entre trimestres */
+            transition: background-color 0.2s ease;
+        }
+        .dropdown-content a:last-child {
+            border-bottom: none; /* No hay separador en el último */
+        }
+        .dropdown-content a:hover {
+            background-color: #e0f2f7; /* Un celeste suave al pasar el ratón */
+            color: #007bff;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .main-content {
+            flex-grow: 1; /* Ocupa el espacio restante */
+            padding: 30px;
+            margin: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .content-section {
+            display: none; /* Oculta todas las secciones de contenido por defecto */
+            padding: 20px 0;
+        }
+        .content-section.active {
+            display: block; /* Muestra la sección activa */
+        }
+        .content-section h2 {
+            color: #6a1b9a; /* Morado para títulos de sección */
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ede7f6;
+            padding-bottom: 10px;
+        }
+        .content-section p {
+            margin-bottom: 10px;
+        }
+        .content-section ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px; /* Espacio debajo de la lista */
+        }
+        .content-section li {
+            margin-bottom: 5px;
+        }
+        .github-image {
+            max-width: 80%; /* Ajusta el tamaño máximo de la imagen */
+            height: auto;
+            display: block; /* Para centrarla si es necesario */
+            margin: 20px auto 0 auto; /* Margen superior y centrado */
+            border: 1px solid #ddd; /* Borde suave */
+            border-radius: 8px; /* Bordes redondeados */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Estilos para el pie de página (opcional) */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: auto; /* Empuja el footer hacia abajo */
+            color: #666;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+       <img src="https://1.bp.blogspot.com/-j0qz64EoZac/U3_47_ff-mI/AAAAAAAAAH0/Fetbt-o8Z2M/s1600/NID.png"  width="50" height="50" alt="NID">
+        <h1>PROYECTO ÁREA TÉCNICA INFORMÁTICA 2025-2026</h1>
+        <p class="subtitle">Angie Jamileth Basurto</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li class="dropdown design-web">
+                <a href="#" onclick="showContent('design-web-1')">DISEÑO Y DESARROLLO WEB</a>
+                <div class="dropdown-content">
+                    <a href="#" onclick="showContent('design-web-1')">1er Trimestre</a>
+                    <a href="#" onclick="showContent('design-web-2')">2do Trimestre</a>
+                    <a href="#" onclick="showContent('design-web-3')">3er Trimestre</a>
+                </div>
+            </li>
+            <li class="os-networks"><a href="#" onclick="showContent('os-networks')">SISTEMA OPERATIVO Y REDES</a></li>
+            <li class="tech-support"><a href="#" onclick="showContent('tech-support')">SOPORTE TÉCNICO</a></li>
+            <li class="programming-db"><a href="#" onclick="showContent('programming-db')">PROGRAMACIÓN Y BASE DE DATOS</a></li>
+            <li class="office-apps"><a href="#" onclick="showContent('office-apps')">APLICACIÓN OFIMÁTICA</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <div id="design-web-1" class="content-section">
+            <h2>Diseño y Desarrollo Web - 1er Trimestre: ¿Qué es GitHub?</h2>
+            <p><strong>GitHub</strong> es una plataforma de desarrollo colaborativo de software que utiliza Git para el control de versiones. Es ampliamente utilizado por desarrolladores para alojar sus proyectos, colaborar en código con otros, y gestionar cambios de manera eficiente.</p>
+            <h3>Conceptos clave de GitHub:</h3>
+            <ul>
+                <li><strong>Repositorio (Repository):</strong> Es el lugar donde se almacena tu proyecto, incluyendo todos los archivos, el historial de versiones y la información de colaboración.</li>
+                <li><strong>Git:</strong> Es el sistema de control de versiones distribuido que GitHub utiliza. Te permite rastrear cambios en tu código, volver a versiones anteriores y trabajar en paralelo con otros.</li>
+                <li><strong>Commit:</strong> Un "commit" es una instantánea de los cambios en tu repositorio en un momento dado. Cada commit tiene un mensaje que describe los cambios realizados.</li>
+                <li><strong>Branch (Rama):</strong> Las ramas te permiten trabajar en diferentes versiones de un proyecto simultáneamente. Puedes crear una rama para nuevas características o correcciones de errores sin afectar el código principal.</li>
+                <li><strong>Merge (Fusión):</strong> Es el proceso de integrar los cambios de una rama a otra, generalmente de una rama de características a la rama principal.</li>
+                <li><strong>Pull Request (Solicitud de Extracción):</strong> Es una forma de notificar a otros desarrolladores que has completado una característica o corrección y que te gustaría que revisaran tu código antes de fusionarlo con la rama principal. Facilita la revisión de código y la discusión.</li>
+                <li><strong>Fork:</strong> Crear un "fork" de un repositorio es hacer una copia de este en tu propia cuenta de GitHub, lo que te permite experimentar con el proyecto sin afectar el original.</li>
+            </ul>
+            <p>GitHub no solo es una herramienta para programadores, sino también una comunidad donde se puede descubrir, contribuir y aprender de proyectos de código abierto de todo el mundo.</p>
+            <img src="https://logosmarcas.net/wp-content/uploads/2020/12/GitHub-Logo.png"width="165" height="165"  alt="Logo de GitHub" class="github-image">
+            <p style="text-align: center; font-size: 0.9em; color: #555;">(Imagen de GitHub)</p>
+<H1>Video de GitHub </h1><br
+<iframe width="560" height="315" src="https://www.youtube.com/embed/IFcWZgJzBt0?si=-SsXF-IIYuY7iHrV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+
+        <div id="design-web-2" class="content-section">
+            <h2>Diseño y Desarrollo Web - 2do Trimestre</h2>
+            <p>Aquí se podría colocar información sobre HTML, CSS avanzado, fram eworks, etc.</p>
+        </div>
+
+        <div id="design-web-3" class="content-section">
+            <h2>Diseño y Desarrollo Web - 3er Trimestre</h2>
+            <p>Aquí se podría colocar información sobre JavaScript, librerías, despliegue, etc.</p>
+        </div>
+
+        <div id="os-networks" class="content-section">
+            <h2>Sistema Operativo y Redes</h2>
+            <p>Contenido sobre sistemas operativos (Windows, Linux), redes (protocolos, topologías, configuración), seguridad, etc.</p>
+        </div>
+
+        <div id="tech-support" class="content-section">
+            <h2>Soporte Técnico</h2>
+            <p>Contenido sobre resolución de problemas de hardware y software, mantenimiento preventivo, atención al usuario, etc.</p>
+        </div>
+
+        <div id="programming-db" class="content-section">
+            <h2>Programación y Base de Datos</h2>
+            <p>Contenido sobre lenguajes de programación (Python, Java, etc.), bases de datos (SQL, NoSQL), diseño de bases de datos, consultas, etc.</p>
+        </div>
+
+        <div id="office-apps" class="content-section">
+            <h2>Aplicación Ofimática</h2>
+            <p>Contenido sobre el uso avanzado de Word, Excel, PowerPoint, herramientas colaborativas, etc.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Proyecto Área Técnica Informática.</p>
+    </footer>
+
+    <script>
+        // Función JavaScript para mostrar la sección de contenido correcta
+        function showContent(id) {
+            // Oculta todas las secciones de contenido
+            var sections = document.querySelectorAll('.content-section');
+            sections.forEach(function(section) {
+                section.classList.remove('active');
+            });
+
+            // Muestra la sección de contenido deseada
+            var activeSection = document.getElementById(id);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
+        }
+
+        // NO se muestra ninguna sección por defecto al cargar la página
+        // El usuario debe hacer clic en un elemento del menú para ver el contenido.
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     showContent('design-web-1'); // Esta línea se ha comentado o eliminado
+        // });
+    </script>
+
+</body>
+</html>
